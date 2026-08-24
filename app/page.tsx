@@ -1,69 +1,82 @@
+import { ArrowRight, Filmstrip, NodesRight, Puzzle } from "@gravity-ui/icons";
+import { Card, Chip, Heading, Paragraph } from "@heroui/react";
 import Image from "next/image";
 
-export default function Home() {
+import { ButtonLink } from "@/components/button-link";
+
+export default function HomePage(): React.ReactElement {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div>
+      <section className="border-b border-separator bg-[radial-gradient(ellipse_at_top,_#252525_0%,_#1e1e1e_55%)]">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="space-y-6">
+            <Chip size="sm" variant="soft" color="accent">
+              <Chip.Label>Product line</Chip.Label>
+            </Chip>
+            <Heading level={1} className="text-4xl tracking-tight sm:text-5xl">
+              Professional tools. One Aphelion language.
+            </Heading>
+            <Paragraph className="max-w-xl text-muted" size="base">
+              Aphelion is a series of apps built for people who live in dark,
+              dense workspaces. Today that means Aphelion Editor — a node-based
+              video compositor. Plugins for every product in the line start with
+              the same SDK.
+            </Paragraph>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink size="lg" href="/products">
+                View products
+                <ArrowRight className="size-4" />
+              </ButtonLink>
+              <ButtonLink size="lg" variant="secondary" href="/docs">
+                Docs
+              </ButtonLink>
+              <ButtonLink size="lg" variant="secondary" href="/sdk">
+                Download SDK
+              </ButtonLink>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-separator bg-surface shadow-[0_24px_48px_-8px_rgba(0,0,0,0.65),0_8px_16px_-4px_rgba(0,0,0,0.45)]">
             <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+              src="/aphelion-editor-app-sample.png"
+              alt="Aphelion Editor: timeline, node graph, and inspector in Aphelion Dark"
+              width={1600}
+              height={900}
+              className="h-auto w-full rounded-2xl"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-4 px-4 py-16 sm:grid-cols-3">
+        <Card>
+          <Card.Header>
+            <Filmstrip className="size-5 text-accent" />
+            <Card.Title>Editor first</Card.Title>
+            <Card.Description>
+              A compositor-grade desktop app: graphs, clips, and panels that stay out of the way.
+            </Card.Description>
+          </Card.Header>
+        </Card>
+        <Card>
+          <Card.Header>
+            <Puzzle className="size-5 text-accent" />
+            <Card.Title>One plugin SDK</Card.Title>
+            <Card.Description>
+              Write effects, panels, and dialogs once. The SDK is the public surface for every Aphelion product.
+            </Card.Description>
+          </Card.Header>
+        </Card>
+        <Card>
+          <Card.Header>
+            <NodesRight className="size-5 text-accent" />
+            <Card.Title>Same chrome</Card.Title>
+            <Card.Description>
+              Charcoal panels, cool accent, tight radii — the website matches the editor you already use.
+            </Card.Description>
+          </Card.Header>
+        </Card>
+      </section>
     </div>
   );
 }

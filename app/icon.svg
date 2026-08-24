@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="aphelionTitle aphelionDesc">
+  <title id="aphelionTitle">Aphelion</title>
+  <desc id="aphelionDesc">Aphelion product-line mark: geometric A on a rounded slate plate.</desc>
+  <defs>
+    <radialGradient id="aphelionPlate" cx="50%" cy="36%" r="74%">
+      <stop offset="0%" stop-color="#3a7eb8"/>
+      <stop offset="55%" stop-color="#2b6ea8"/>
+      <stop offset="100%" stop-color="#1e4f7a"/>
+    </radialGradient>
+    <linearGradient id="aphelionLetter" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#f4f7fa"/>
+      <stop offset="100%" stop-color="#c8d3de"/>
+    </linearGradient>
+    <filter id="aphelionInset" x="-10%" y="-10%" width="120%" height="120%">
+      <feOffset dx="0" dy="1.5" in="SourceAlpha" result="off"/>
+      <feGaussianBlur in="off" stdDeviation="1.6" result="blur"/>
+      <feComposite in="blur" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="inner"/>
+      <feColorMatrix in="inner" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.12  0 0 0 0 0.2  0 0 0 0.45 0"/>
+      <feBlend in="SourceGraphic" in2="inner" mode="normal"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#aphelionPlate)"/>
+  <g fill="url(#aphelionLetter)" filter="url(#aphelionInset)">
+    <path d="M140 408H204L232 304H280L308 408H372L278 116H234Z"/>
+    <rect x="214" y="268" width="84" height="30" rx="3"/>
+  </g>
+</svg>

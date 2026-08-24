@@ -1,26 +1,96 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@heroui/styles";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/*
+ * Aphelion Dark — aligned with aphelion-editor theme_tokens (window #1e1e1e,
+ * panels #1a1a1a, surfaces #252525 / #2a2a2a, accent #2b6ea8).
+ */
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #1e1e1e;
+  --foreground: #ffffff;
+  --surface: #252525;
+  --surface-foreground: #ffffff;
+  --surface-secondary: #2a2a2a;
+  --surface-tertiary: #1a1a1a;
+  --overlay: #2a2a2a;
+  --overlay-foreground: #ffffff;
+  --muted: #8a8a94;
+  --accent: #2b6ea8;
+  --accent-foreground: #ffffff;
+  --default: #2a2a2a;
+  --default-foreground: #ffffff;
+  --field-background: #252525;
+  --field-foreground: #ffffff;
+  --border: #333333;
+  --separator: #333333;
+  --link: #9ecfff;
+  --radius: 0.375rem;
+  --accent-hover: #347ebc;
+  --surface-shadow: 0 0 0 1px #333333;
+  --overlay-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+.docs-prose {
+  color: var(--foreground);
+  line-height: 1.7;
+}
+
+.docs-prose h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.docs-prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.docs-prose h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.docs-prose p,
+.docs-prose ul,
+.docs-prose ol {
+  margin: 0.75rem 0;
+  color: #c8c8c8;
+}
+
+.docs-prose li {
+  margin: 0.25rem 0;
+}
+
+.docs-prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.docs-prose ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+
+.docs-prose hr {
+  border-color: var(--separator);
+  margin: 2rem 0;
 }
