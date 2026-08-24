@@ -4,13 +4,17 @@ export const SITE_NAME = "Aphelion";
 
 export const GITHUB_EDITOR_URL = `https://github.com/${GITHUB_ORG}/aphelion-editor`;
 
-export const GITHUB_SDK_URL = `https://github.com/${GITHUB_ORG}/aphelion-sdk`;
+export const GITHUB_EDITOR_REPO = "aphelion-editor";
+
+export const GITHUB_SDK_REPO = "aphelion-sdk";
+
+export const GITHUB_SDK_URL = `https://github.com/${GITHUB_ORG}/${GITHUB_SDK_REPO}`;
 
 export const SDK_VERSION = "0.1.0";
 
 export const SDK_DOWNLOAD_HREF = "/api/sdk/download";
 
-export const PIP_GIT_INSTALL = `pip install "git+${GITHUB_SDK_URL}.git"`;
+export const PIP_GIT_INSTALL = `pip install aphelion-plugin-sdk`;
 
 export const PIP_LOCAL_INSTALL = "pip install -e ./aphelion-sdk";
 

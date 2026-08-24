@@ -43,6 +43,51 @@ body {
   font-family: var(--font-sans);
 }
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up,
+.animate-fade-up {
+  animation: fade-up 0.55s ease-out both;
+}
+
+.animate-fade-up-delay,
+.animate-fade-up-delay {
+  animation: fade-up 0.65s ease-out 0.08s both;
+}
+
+.release-hero,
+.release-hero {
+  background:
+    radial-gradient(ellipse 80% 55% at 12% -10%, rgba(43, 110, 168, 0.38), transparent 58%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(43, 110, 168, 0.16), transparent 52%),
+    #1e1e1e;
+}
+
+.release-card-featured {
+  background:
+    linear-gradient(#252525, #252525) padding-box,
+    linear-gradient(135deg, rgba(52, 126, 188, 0.9), rgba(43, 110, 168, 0.2), #333) border-box;
+  border: 1px solid transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-up,
+  .animate-fade-up-delay,
+  .animate-fade-up-delay {
+    animation: none;
+  }
+}
+
 .docs-prose {
   color: var(--foreground);
   line-height: 1.7;
@@ -94,3 +139,4 @@ body {
   border-color: var(--separator);
   margin: 2rem 0;
 }
+
