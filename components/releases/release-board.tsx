@@ -1,5 +1,3 @@
-import { LogoGithub } from "@gravity-ui/icons";
-
 import { ButtonLink } from "@/components/button-link";
 import { ReleaseCard } from "@/components/releases/release-card";
 import type { ClassifiedReleases, GithubRelease, ReleaseKind } from "@/lib/releases/types";
@@ -38,22 +36,24 @@ export function ReleaseBoard({
     featured.push(stable);
   }
 
-  if (!latest && !stable && others.length === 0) {
+  if (featured.length === 0 && others.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-separator bg-surface-secondary px-6 py-12 text-center">
-        <p className="text-muted">{emptyLabel}</p>
-        <div className="mt-4 flex justify-center">
-          <ButtonLink href={githubUrl} variant="secondary" target="_blank" rel="noreferrer">
-            <LogoGithub className="size-4" />
-            Open GitHub
-          </ButtonLink>
+      <div className="aph-dock">
+        <div className="aph-dock__title">Releases</div>
+        <div className="aph-dock__body text-center">
+          <p className="text-sm text-muted">{emptyLabel}</p>
+          <div className="mt-4 flex justify-center">
+            <ButtonLink href={githubUrl} variant="secondary" target="_blank" rel="noreferrer">
+              Open GitHub
+            </ButtonLink>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       {featured.length > 0 ? (
         <div className="grid gap-4 lg:grid-cols-2">
           {featured.map((release) => (
@@ -68,9 +68,11 @@ export function ReleaseBoard({
       ) : null}
 
       {others.length > 0 ? (
-        <div className="space-y-4">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">All other releases</h2>
-          <div className="grid gap-3">
+        <div>
+          <h3 className="aph-section-title mb-3">
+            {others.length} older {others.length === 1 ? "release" : "releases"}
+          </h3>
+          <div className="space-y-2">
             {others.map((release) => (
               <ReleaseCard
                 key={release.id}

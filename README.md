@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# aphelion-web
 
-## Getting Started
+Website for [Aphelion Editor](../aphelion-editor) and the [plugin SDK](../aphelion-sdk).
 
-First, run the development server:
+Next.js App Router, React 19, Tailwind v4 with the HeroUI theme tokens. Deployed on Vercel.
+
+The site deliberately does **not** hard-code release data. Releases and documentation are read
+from the two GitHub repositories at request time and cached:
+
+| Content | Source | Cache |
+|---|---|---|
+| Releases | GitHub Releases API (`aphelion-editor`, `aphelion-sdk`) | 60s |
+| Docs | Markdown in `docs/` of each repo, falling back to the local checkout | 120s |
+
+## Running it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There is no mock data path. Without network access the release boards render their empty state and
+the docs fall back to reading the sibling `aphelion-editor/` and `aphelion-sdk/` folders, so run the
+development server from inside `aphelion-engine/` if you want local docs.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Required | Purpose |
+|---|---|---|
+| `GITHUB_TOKEN` | No | Raises the GitHub API rate limit and allows reading private repos |
+| `NEXT_PUBLIC_SITE_URL` | No | Absolute base URL for Open Graph tags. Omitted if unset |
+| `DOCS_REVALIDATE_SECRET` | No | Shared secret for `POST /api/docs/revalidate` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Where things live
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/            Routes. /editor, /docs/[source]/[...slug], /sdk, /api/*
+components/     Header, footer, release board, docs shell and markdown renderer
+lib/site.ts     Product facts, links and versions shown across the site
+lib/ui.ts       Shared class tokens
+lib/releases/   GitHub releases fetching and classification
+lib/docs/       GitHub docs fetching, path mapping, link rewriting
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Release and version numbers shown on the site live in `lib/site.ts`. Keep them in step with each
+package's `pyproject.toml`.
