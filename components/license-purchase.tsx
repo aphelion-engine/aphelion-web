@@ -14,6 +14,22 @@ async function apiRequest(user: User, url: string, init: RequestInit = {}) {
   return fetch(url, { ...init, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...init.headers } });
 }
 
+async function readJson<T>(response: Response): Promise<T> {
+  const text = await response.text();
+  if (!text) throw new Error(`Server returned an empty response${response.status ? ` (HTTP ${response.status})` : ""}.`);
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    throw new Error(`Server returned a non-JSON response${response.status ? ` (HTTP ${response.status})` : ""}.`);
+  }
+  if (!response.ok) {
+    const message = (body as { error?: unknown } | null)?.error;
+    throw new Error(typeof message === "string" && message ? message : `Request failed${response.status ? ` (HTTP ${response.status})` : ""}.`);
+  }
+  return body as T;
+}
+
 export function LicensePurchase({ price, currency }: Props): React.ReactElement {
   const searchParams = useSearchParams();
   const [user, setUser] = useState<User | null>(null);
@@ -33,7 +49,7 @@ export function LicensePurchase({ price, currency }: Props): React.ReactElement 
     void Promise.resolve().then(() => {
       setBusy(true);
       return apiRequest(user, "/api/payments/paypal/capture-order", { method: "POST", body: JSON.stringify({ orderId }) });
-    }).then(async (response) => { const body = await response.json(); if (!response.ok) throw new Error(body.error || "Payment confirmation failed."); setLicenseKey(body.licenseKey || ""); if (!body.licenseKey) setError("Payment is complete. Your license is already secured in your account."); })
+    }).then(async (response) => { const body = await readJson<{ licenseKey?: string }>(response); setLicenseKey(body.licenseKey || ""); if (!body.licenseKey) setError("Payment is complete. Your license is already secured in your account."); })
       .catch((reason: unknown) => setError(reason instanceof Error ? reason.message : "Payment confirmation failed."))
       .finally(() => setBusy(false));
   }, [licenseKey, searchParams, user]);
@@ -43,8 +59,9 @@ export function LicensePurchase({ price, currency }: Props): React.ReactElement 
     setBusy(true); setError("");
     try {
       const response = await apiRequest(user, "/api/payments/paypal/create-order", { method: "POST", body: "{}" });
-      const body = await response.json();
-      if (!response.ok || !body.approvalUrl) throw new Error(body.error || "Unable to start checkout.");
+      const body = await readJson<{ approvalUrl?: string; fulfilled?: boolean; licenseKey?: string }>(response);
+      if (body.fulfilled) { setLicenseKey(body.licenseKey || ""); if (!body.licenseKey) setError("Payment is complete. Your license is already secured in your account."); setBusy(false); return; }
+      if (!body.approvalUrl) throw new Error("Unable to start checkout.");
       window.location.assign(body.approvalUrl);
     } catch (reason) { setError(reason instanceof Error ? reason.message : "Unable to start checkout."); setBusy(false); }
   };

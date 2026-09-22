@@ -1,9 +1,10 @@
-import { verifyFirebaseBearer, adminDb } from "@/lib/server/firebase-admin";
+import { adminDb, verifyFirebaseBearer } from "@/lib/server/firebase-admin";
 import { fulfillCapturedOrder, validateCapturedOrder } from "@/lib/server/licensing";
-import { assertBrowserOrigin, jsonError } from "@/lib/server/request-security";
 import { paypalApi, type PayPalOrder } from "@/lib/server/paypal";
+import { assertBrowserOrigin, jsonError } from "@/lib/server/request-security";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: Request): Promise<Response> {
   try {
