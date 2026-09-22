@@ -263,6 +263,46 @@ export default function HomePage(): React.ReactElement {
         </div>
       </section>
 
+      <section className="border-b border-[#121212]">
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
+            <div>
+              <h2 className="aph-section-title">Free to try. One license for everything.</h2>
+              <p className="mt-4 text-sm text-muted">
+                Aphelion Editor is free to download and use for a seven-day trial. After that, it
+                asks you to purchase a license, but it does not lock you out or disable your work.
+                The model is intentionally closer to Reaper or WinRAR than a hard stop.
+              </p>
+              <p className="mt-4 text-sm text-muted">
+                A single lifetime Aphelion license covers Aphelion Editor and all current and future
+                Aphelion software. There is no recurring subscription for the license.
+              </p>
+              <NextLink className={`${TEXT_LINK} mt-5 inline-flex text-sm`} href="/license">
+                Read the licensing details and purchase
+              </NextLink>
+            </div>
+            <dl className="aph-panel">
+              {[
+                ["01", "Download", "Install Aphelion Editor and explore the complete node-based compositor."],
+                ["02", "Seven days", "Use the editor normally. The trial reminder appears after seven days."],
+                ["03", "Own the suite", "Purchase one lifetime license and redeem it once for each Aphelion product you use."],
+              ].map(([number, title, detail], index) => (
+                <div
+                  key={number}
+                  className={`grid gap-3 px-4 py-4 sm:grid-cols-[2.5rem_8rem_minmax(0,1fr)] sm:items-start sm:gap-4 ${
+                    index > 0 ? "border-t border-[#2a2a2a]" : ""
+                  }`}
+                >
+                  <span className="font-mono text-xs text-[#50a0ff]">{number}</span>
+                  <dt className="text-sm font-semibold text-[#e6e6e6]">{title}</dt>
+                  <dd className="text-sm text-muted">{detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
       <section>
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-12">
           <div>

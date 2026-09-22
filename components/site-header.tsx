@@ -4,9 +4,11 @@ import { Bars, Xmark } from "@gravity-ui/icons";
 import Image from "next/image";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
 
 import { ButtonLink } from "@/components/button-link";
+import { firebaseApp, requireFirebaseConfig } from "@/lib/firebase";
 import { GITHUB_EDITOR_URL, SITE_NAME } from "@/lib/site";
 
 const NAV: readonly { href: string; label: string }[] = [
@@ -23,6 +25,11 @@ function isActive(pathname: string, href: string): boolean {
 export function SiteHeader(): React.ReactElement {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    try { requireFirebaseConfig(); return onAuthStateChanged(getAuth(firebaseApp), setUser); } catch { return undefined; }
+  }, []);
 
   // The panel closes from the link handlers rather than an effect on
   // `pathname`; a routes-change effect would trigger an extra render pass.
@@ -60,6 +67,14 @@ export function SiteHeader(): React.ReactElement {
           <ButtonLink className="ml-2" size="sm" href="/editor">
             Download
           </ButtonLink>
+          <NextLink href="/license" aria-current={isActive(pathname, "/license") ? "page" : undefined} className="aph-menubar__item">License</NextLink>
+          <NextLink
+            href={user ? "/account" : "/login"}
+            aria-current={user && isActive(pathname, "/account") ? "page" : undefined}
+            className="aph-menubar__item"
+          >
+            {user ? "Account" : "Login"}
+          </NextLink>
         </nav>
 
         <button
@@ -103,6 +118,15 @@ export function SiteHeader(): React.ReactElement {
           <ButtonLink className="mt-2" fullWidth href="/editor" onClick={closeMenu}>
             Download
           </ButtonLink>
+          <NextLink href="/license" aria-current={isActive(pathname, "/license") ? "page" : undefined} className="aph-menubar__item mt-1" onClick={closeMenu}>License</NextLink>
+          <NextLink
+            href={user ? "/account" : "/login"}
+            aria-current={user && isActive(pathname, "/account") ? "page" : undefined}
+            className="aph-menubar__item mt-1"
+            onClick={closeMenu}
+          >
+            {user ? "Account" : "Login"}
+          </NextLink>
         </nav>
       </div>
     </header>

@@ -42,6 +42,12 @@ function describeMarkdown(markdown: string, title: string): string {
     .replace(/^\s{0,3}>.*$/gm, " ")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    // Whole table rows. Stripping only the pipes — which is what the next
+    // line used to do — glued the delimiter row into the snippet as
+    // `Symbol Purpose ------`, and both `api.md` and `vfx-tools.md` open with
+    // a table, so that was the description on two published pages. A prose
+    // line containing a literal pipe does not occur in these documents.
+    .replace(/^.*\|.*$/gm, " ")
     .replace(/^\s*[-*+]\s+/gm, " ")
     .replace(/[*_`|]/g, "")
     .replace(/\s+/g, " ")

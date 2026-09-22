@@ -30,12 +30,27 @@ npm run lint
 npm run build
 ```
 
+The build is the only check that does not need a running server. The SEO audit also inspects
+server-rendered documentation pages and live redirect behaviour, so it has two modes:
+
+```bash
+npm run audit:seo                # built output: sitemap, robots, metadata, internal links
+npm run build && npm run start   # then, in another shell:
+npm run audit:seo:live           # also crawls the docs pages and checks the runtime
+```
+
+It exits non-zero and is specific enough to gate a release: it asserts that every internal link
+resolves, that no title exceeds 60 characters or description 160, that canonicals and `og:url`
+match the sitemap exactly, that documentation pages carry `BreadcrumbList` and `TechArticle`, and
+that an unknown route — including an unknown documentation slug — returns a real 404 rather than a
+soft one.
+
 ## Environment
 
 | Variable | Required | Purpose |
 |---|---|---|
 | `GITHUB_TOKEN` | No | Raises the GitHub API rate limit and allows reading private repos |
-| `NEXT_PUBLIC_SITE_URL` | No | Absolute base URL for Open Graph tags. Omitted if unset |
+| `NEXT_PUBLIC_SITE_URL` | No | Overrides the canonical origin, for preview deployments. Defaults to `https://www.aphelion-community.com`, which is always applied — an unset variable no longer drops absolute URLs from the output |
 | `DOCS_REVALIDATE_SECRET` | No | Shared secret for `POST /api/docs/revalidate` |
 
 ## Where things live
@@ -44,9 +59,11 @@ npm run build
 app/            Routes. /editor, /docs/[source]/[...slug], /sdk, /api/*
 components/     Header, footer, release board, docs shell and markdown renderer
 lib/site.ts     Product facts, links and versions shown across the site
+lib/seo.ts      Canonical host, URL building and per-page metadata
 lib/ui.ts       Shared class tokens
 lib/releases/   GitHub releases fetching and classification
 lib/docs/       GitHub docs fetching, path mapping, link rewriting
+scripts/        seo-audit.mjs — the regression suite described above
 ```
 
 Release and version numbers shown on the site live in `lib/site.ts`. Keep them in step with each

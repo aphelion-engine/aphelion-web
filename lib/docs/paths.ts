@@ -9,20 +9,35 @@ export type DocsPage = {
 
 /**
  * Split on hyphens and capitalize, but keep short all-caps names intact.
- * Without this, `api.md` renders as "Api" and `sdk` as "Sdk".
+ * Without this, `api.md` renders as "Api", `sdk` as "Sdk", and `vfx-tools.md`
+ * as "Vfx Tools" — which is what the site shipped until `vfx` was added here.
  */
 const ACRONYMS: ReadonlySet<string> = new Set([
   "api",
+  "aov",
   "cli",
   "cpu",
+  "dv",
+  "exr",
+  "fps",
   "gpu",
+  "hdr",
+  "hsv",
   "ide",
   "json",
+  "lut",
   "mp4",
+  "nle",
+  "ocio",
   "png",
+  "rgb",
+  "roi",
   "sdk",
   "ui",
   "ux",
+  "vfx",
+  "2d",
+  "3d",
 ]);
 
 function humanizeSegment(segment: string): string {

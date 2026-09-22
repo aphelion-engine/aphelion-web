@@ -1,0 +1,13 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All application data is server-managed through Firebase Admin. Admin
+    // SDK requests bypass these rules; browser and product clients do not.
+    // This prevents users from reading license ciphertexts, hashes, payment
+    // records, or redemption history directly from Firestore.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

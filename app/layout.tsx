@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { JsonLd } from "@/components/json-ld";
+import { FirebaseAnalytics } from "@/components/firebase-analytics";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Site-level identity, declared once. Page-level graphs reference
             these nodes by `@id` rather than restating them. */}
         <JsonLd data={jsonLdGraph([organizationSchema(), websiteSchema()])} />
+        <FirebaseAnalytics />
       </body>
     </html>
   );

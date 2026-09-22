@@ -138,6 +138,23 @@ export default function AboutPage(): React.ReactElement {
           <div className="aph-prose">
             <h3 className="!mt-0">Licensing</h3>
             <p>{LICENSE_STATEMENT}</p>
+            <p>
+              Aphelion Editor is free to download and use for seven days. Once that period has
+              passed, the editor asks you to purchase a license, but it does not enforce the reminder
+              by locking the application or your projects. It is an honor-system model similar to
+              Reaper or WinRAR: keep using it, or purchase a license if Aphelion is useful to you.
+            </p>
+            <p>
+              One lifetime Aphelion license covers Aphelion Editor and all current and future Aphelion
+              software. A license key can be redeemed once for each product, so one key does not need
+              to be replaced as the product family grows. The paid license grants software-use rights;
+              it does not grant rights to reuse or redistribute the proprietary source code.
+            </p>
+            <p>
+              <NextLink className={TEXT_LINK} href="/license">
+                See the full license purchase explanation
+              </NextLink>
+            </p>
             <p className="text-xs">
               The authoritative statement for any release is the licence field in that
               package&apos;s <code>pyproject.toml</code>. This page summarises it; it does not
